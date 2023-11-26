@@ -18,13 +18,13 @@ class Representative < ApplicationRecord
       end
 
       # added this for task 1.1
-      existRep = Representative.find_by(name: official.name)
-      if existRep != nil
-        existRep.update!(ocdid: ocdid_temp, title: title_temp)
-        reps.push(existRep)
-      else
+      existing_rep = Representative.find_by(name: official.name)
+      if existing_rep.nil?
         rep = Representative.create!({ name: official.name, ocdid: ocdid_temp, title: title_temp })
         reps.push(rep)
+      else
+        existing_rep.update!(ocdid: ocdid_temp, title: title_temp)
+        reps.push(existing_rep)
       end
     end
 
