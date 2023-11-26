@@ -6,31 +6,31 @@ RSpec.describe Representative, type: :model do
   describe 'double representative test' do
     def setup_representatives(repinfo, office_name, division_id, person_index)
       allow(repinfo).to receive(:officials).and_return([
-        instance_double('official', name: 'John Doe'),
-        instance_double('official', name: 'Jane Chung')
+        instance_double(Official, name: 'John Doe'),
+        instance_double(Official, name: 'Jane Chung')
       ])
-      office = instance_double('office', name: office_name, division_id: division_id, official_indices: [person_index])
+      office = instance_double(Office, name: office_name, division_id: division_id, official_indices: [person_index])
       allow(repinfo).to receive(:offices).and_return([office])
 
       described_class.civic_api_to_representative_params(repinfo)
     end
 
     it 'Task 1.1 Refactoring Legacy Code' do
-      puts "Debugging information:"
 
-      representatives1 = setup_representatives(instance_double('repinfo'), 'Office A', '1123', 0)
-      puts "officials: #{representatives1.inspect}"
+      representatives1 = setup_representatives(instance_double('repinfo'), 'Office A', 'A1', 0)
+      puts "officials: " + representatives1.inspect.to_s
 
-      representatives2 = setup_representatives(instance_double('repinfo2'), 'Office B', '1223', 1)
-      puts "officials: #{representatives2.inspect}"
+      representatives2 = setup_representatives(instance_double('repinfo2'), 'Office B', 'B2', 1)
+      puts "officials: " + representatives1.inspect.to_s
 
-      representatives3 = setup_representatives(instance_double('repinfo3'), 'Office C', '1233', 0)
-      puts "officials: #{representatives3.inspect}"
+      representatives3 = setup_representatives(instance_double('repinfo3'), 'Office C', 'C3', 0)
+      puts "officials: " + representatives1.inspect.to_s
 
       representative = representatives3.first
-      puts "#{representative.inspect}"
+      puts representative.inspect.to_s
 
       expect(representative.id).to eq(1)
+      expect(representative.ocdid).to eq("C3")
     end
   end
 end
