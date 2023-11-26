@@ -1,42 +1,35 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Representative, type: :model do
   describe 'double representative test' do
-    it 'Task 1.1 Refactoring Legacy Code' do
-      repinfo = instance_double('repinfo')
+    def setup_representatives(repinfo, office_name, division_id, person_index)
       allow(repinfo).to receive(:officials).and_return([
         instance_double('official', name: 'John Doe'),
+        instance_double('official', name: 'Jane Chung')
       ])
-      office1 = instance_double('office', name: 'Office A', division_id: '1123', official_indices: [0])
-      allow(repinfo).to receive(:offices).and_return([office1])
-      representatives = described_class.civic_api_to_representative_params(repinfo)
+      office = instance_double('office', name: office_name, division_id: division_id, official_indices: [person_index])
+      allow(repinfo).to receive(:offices).and_return([office])
+
+      described_class.civic_api_to_representative_params(repinfo)
+    end
+
+    it 'Task 1.1 Refactoring Legacy Code' do
       puts "Debugging information:"
-      puts "officials: #{representatives.inspect}"
 
-      repinfo2 = instance_double('repinfo2')
-      allow(repinfo2).to receive(:officials).and_return([
-        instance_double('official', name: 'Jane Doe')
-      ])
-      office2 = instance_double('office', name: 'Office B', division_id: '1223', official_indices: [0])
-      allow(repinfo2).to receive(:offices).and_return([office2])
+      representatives1 = setup_representatives(instance_double('repinfo'), 'Office A', '1123', 0)
+      puts "officials: #{representatives1.inspect}"
 
-      representatives = described_class.civic_api_to_representative_params(repinfo2)
-      puts "Debugging information:"
-      puts "officials: #{representatives.inspect}"
+      representatives2 = setup_representatives(instance_double('repinfo2'), 'Office B', '1223', 1)
+      puts "officials: #{representatives2.inspect}"
 
-      repinfo3 = instance_double('repinfo3')
-      allow(repinfo3).to receive(:officials).and_return([
-        instance_double('official', name: 'John Doe')
-      ])
-      office3 = instance_double('office', name: 'Office C', division_id: '1233', official_indices: [0])
-      allow(repinfo3).to receive(:offices).and_return([office3])
+      representatives3 = setup_representatives(instance_double('repinfo3'), 'Office C', '1233', 0)
+      puts "officials: #{representatives3.inspect}"
 
-      representatives = Representative.civic_api_to_representative_params(repinfo3)
-      puts "Debugging information:"
-      puts "officials: #{representatives.inspect}"
-      representative = representatives.first
+      representative = representatives3.first
       puts "#{representative.inspect}"
+
       expect(representative.id).to eq(1)
     end
   end
