@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Representative, type: :model do
-  describe 'double representative test' do
+  describe 'double representative tesdt' do
     it 'Task 1.1 Refactoring Legacy Code, if I have the same representative, update instead of creating new one' do
 
     repinfo = double('repinfo')
