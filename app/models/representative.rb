@@ -24,4 +24,7 @@ class Representative < ApplicationRecord
 
     reps
   end
+  serialize :address, JSON
+  serialize :office, JSON
+  serialize :photo, JSON
 end
