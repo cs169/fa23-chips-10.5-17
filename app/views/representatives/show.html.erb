@@ -1,5 +1,15 @@
-<h1><%= @representative.name %></h1>
-<p><%= @representative.office %></p>
-<p>Contact Address: <%= @additional_info[:address] %></p>
-<p>Political Party: <%= @additional_info[:party] %></p>
-<p><%= image_tag @additional_info[:photo] %></p>
+<% if @representative %>
+  <h1><%= @representative.name %></h1>
+  <p><%= @representative.title %></p>
+  <p><%= @representative.ocdid %></p>
+<% else %>
+  <p>No representative found</p>
+<% end %>
+
+<% if @additional_info %>
+  <p>Contact Address: <%= "#{@additional_info[:address][:street]}, #{@additional_info[:address][:city]}, #{@additional_info[:address][:state]} #{@additional_info[:address][:zip]}" %></p>
+  <p>Political Party: <%= @additional_info[:party] %></p>
+  <%# <p><%= image_tag @additional_info[:photo] %></p>
+<% else %>
+  <p>No additional information available</p>
+<% end %>
