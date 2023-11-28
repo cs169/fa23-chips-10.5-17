@@ -8,7 +8,8 @@ RSpec.describe Representative, type: :model do
       repinfo = double('repinfo')
       allow(repinfo).to receive(:officials).and_return([
         double("Official", name: 'John Doe'),
-        double("Official", name: 'Jane Chung')
+        double("Official", name: 'Jane Chung'),
+        double("Official", name: 'Joseph R. Biden')
       ])
       office = double("Office", name: office_name, division_id: division_id, official_indices: [person_index])
       allow(repinfo).to receive(:offices).and_return([office])
@@ -39,6 +40,16 @@ RSpec.describe Representative, type: :model do
     context 'Office C' do
       it 'assigns B to John' do
         representatives3 = setup_representatives('Office C', 'C3', 0)
+        puts 'officials: ' + representatives3.inspect.to_s
+        representative = representatives3.first
+        expect(representative.id).to eq(1)
+        expect(representative.ocdid).to eq("C3")
+      end
+    end
+
+    context 'Joe' do
+      it 'assigns Something to Joe' do
+        representatives3 = setup_representatives('Office C', 'C3', 2)
         puts 'officials: ' + representatives3.inspect.to_s
         representative = representatives3.first
         expect(representative.id).to eq(1)
