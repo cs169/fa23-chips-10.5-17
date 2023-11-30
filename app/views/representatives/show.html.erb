@@ -7,7 +7,7 @@
 <% end %>
 
 <% if @additional_info %>
-  <p>Contact Address: <%= "#{@additional_info[:address][:street]}, #{@additional_info[:address][:city]}, #{@additional_info[:address][:state]} #{@additional_info[:address][:zip]}" %></p>
+  <p>Contact Address: <%= "#{@additional_info[:address]}, #{@additional_info[:city]}, #{@additional_info[:state]} #{@additional_info[:zip]}" %></p>
   <p>Political Party: <%= @additional_info[:party] %></p>
   <%# <p><%= image_tag @additional_info[:photo] %></p>
 <% else %>
