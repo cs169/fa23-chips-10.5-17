@@ -7,19 +7,16 @@ class RepresentativesController < ApplicationController
     @representative = Representative.find(params[:id])
 
     # Check if @representative.address is not nil before accessing its attributes
-    if @representative.address
+    if @representative.address && @representative.city && @representative.state && @representative.zip
       @additional_info = {
-        address: {
-          street: @representative.address[:street],
-          city: @representative.address[:city],
-          state: @representative.address[:state],
-          zip: @representative.address[:zip]
-        },
+        address: @representative.address,
+        city: @representative.city,
+        state: @representative.state,
+        zip: @representative.zip,
         party: @representative.party,
         photo: @representative.photo
       }
     else
-      # Handle the case where address is nil (customize as needed)
       @additional_info = {
         address: {
           street: 'N/A',
