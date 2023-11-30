@@ -18,27 +18,27 @@ class Representative < ApplicationRecord
       end
 
       rep = Representative.find_or_initialize_by(name: official.name)
-      if existing_rep.nil?
+      if rep.nil?
         rep = Representative.create!(
           {
             name: official.name,
             ocdid: ocdid_temp,
             title: title_temp,
-            address: parse_address(official.address),
             party: official.party,
-            photo: official.photoUrl
+            # photo: official.photoUrl
           }
         )
+        parse_address(rep, official.address)
         reps.push(rep)
       else
-        existing_rep.update!(
+       rep.update!(
           ocdid: ocdid_temp,
           title: title_temp,
-          address: parse_address(official.address),
           party: official.party,
-          photo: official.photoUrl
+          # photo: official.photoUrl
         )
-        reps.push(existing_rep)
+        parse_address(rep, official.address)
+        reps.push(rep)
       end
     end
 
@@ -46,13 +46,14 @@ class Representative < ApplicationRecord
   end
 
   # Helper method to parse address from Google Civic API response
-  def self.parse_address(api_address)
-    {
-      street: api_address&.line1,
-      city: api_address&.city,
-      state: api_address&.state,
-      zip: api_address&.zip
-    }
+  def self.parse_address(rep, api_address)
+    first_address = api_address&.first
+    rep.update!(
+      address: first_address&.line1,
+      city: first_address&.city,
+      state: first_address&.state,
+      zip: first_address&.zip
+    )
   end
 
   serialize :address, JSON
