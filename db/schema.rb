@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2023_11_26_075958) do
     t.datetime "updated_at", null: false
     t.string "ocdid"
     t.string "title"
-    t.string "street"
+    t.string "address"
     t.string "city"
     t.string "state"
     t.string "zip"
