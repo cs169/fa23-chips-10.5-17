@@ -9,13 +9,10 @@ class SearchController < ApplicationController
     begin
       result = service.representative_info_by_address(address: address)
       @representatives = Representative.civic_api_to_representative_params(result) || []
-      
-      if @representatives.empty?
-        flash.now[:alert] = "No information found for the given address."
-      end
+      flash.now[:alert] = 'No information found for the given address.' if @representatives.empty?
     rescue Google::Apis::Error => e
-      puts "Google API Error: #{e.message}"
-      flash.now[:alert] = "Error fetching information."
+      Rails.logger.error "Google API Error: #{e.message}"
+      flash.now[:alert] = 'No information found for the given address.'
     end
 
     render 'representatives/search'

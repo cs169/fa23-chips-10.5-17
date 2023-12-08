@@ -22,7 +22,7 @@ Background: representatives have been added to the database
   And I am on the CivicInfo home page
   Then 10 seed representatives should exist
 
-Scenario: search representatives by name
+Scenario: search representatives by location
   When I fill in "Name" with "John Doe"
   And I press "Search"
   Then I should see "John Doe" in the search results
