@@ -63,7 +63,6 @@ exports.setupEventHandlers = (stateMap) => {
         return `${countyName}, ${stateMap.state.symbol}`;
     };
     const clickCallback = (elem) => {
-        const countyFipsCode = elem.attr('data-county-fips-code');
         const countyName = elem.attr('data-county-name');
         const stateSymbol = stateMap.state.symbol;
         const searchUrl = `/search?utf8=✓&address=${encodeURIComponent(`${countyName} ${stateSymbol}`)}&commit=Search`;
