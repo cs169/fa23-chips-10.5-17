@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     # Routes for Representatives
     resources :representatives, only: [:index]
     resources :representatives do
+        post 'fake_articles', to: 'my_news_items#fake_articles'
         resources :news_items, only: %i[index show]
         get '/representatives/:representative_id/my_news_item/new' => 'my_news_items#new',
             :as                                                    => :new_my_news_item
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
                                                                       via: %i[put patch]
         match '/representatives/:representative_id/my_news_item/:id', to:  'my_news_items#destroy',
                                                                       via: [:delete]
+        post "add_article", to:"my_news_items#add_article", as:"add_article"
     end
     get '/search/(:address)' => 'search#search', :as => 'search_representatives'
 end

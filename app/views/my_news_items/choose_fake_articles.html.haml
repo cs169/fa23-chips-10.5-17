@@ -1,0 +1,40 @@
+.row.mt-2
+  .col-12
+    %h1.text-center Edit News Item
+
+    - if @selected_representative.present?
+      %h2.text-center
+        Representative: #{link_to @selected_representative.name, representative_path(@selected_representative)}
+      %h2.text-center
+        Issue: #{@issue}
+
+= form_tag representative_add_article_path(@representative), method: :post do
+  .form-group
+    = label_tag 'selected_fake_article', 'Select Fake Article:'
+    
+    - @fake_articles.each do |article|
+      .form-check
+        = radio_button_tag 'selected_fake_article', article.id, false, class: 'form-check-input'
+        = label_tag "fake_article_#{article.id}", class: 'form-check-label' do
+          %strong= article.title
+          %br/
+          %span= article.link
+          %br/
+          %span= article.description
+          = hidden_field_tag 'fake_article[representative_id]', @selected_representative.id
+          = hidden_field_tag 'fake_article[link]', article.link
+          = hidden_field_tag 'fake_article[title]', article.title
+          = hidden_field_tag 'fake_article[description]', article.description
+          = hidden_field_tag 'fake_article[issue]', @issue
+
+  .form-group
+    = label_tag 'rating', 'Rating:'
+    = select_tag 'rating', options_for_select((1..10).to_a), class: 'form-control'
+
+  .clearfix.mt-3
+    .float-right
+      = submit_tag 'Submit', class: 'btn btn-primary'
+
+  = link_to representative_news_items_path(@representative), class: 'btn btn-info' do
+    View news articles
+    %i.fas.fa-arrow-right
