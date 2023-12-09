@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+# For details on the DSL davailable within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
     get '/login' => 'login#login', :as => :login
     get '/login/google', to: redirect('auth/google_oauth2'), as: :google_login
