@@ -216,6 +216,11 @@ Then /^the "([^"]*)" checkbox(?: within (.*))? should be checked$/ do |label, pa
   end
 end
 
+When(/^I choose "([^"]*)" from the "([^"]*)" dropdown$/) do |value, dropdown_id|
+  select(value, from: dropdown_id)
+  find(:css, "##{dropdown_id}", visible: :all)
+end
+
 Then /^the "([^"]*)" checkbox(?: within (.*))? should not be checked$/ do |label, parent|
   with_scope(parent) do
     field_checked = find_field(label)['checked']
